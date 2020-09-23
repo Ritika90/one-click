@@ -1,0 +1,95 @@
+<div style="--top-bar-background:#00848e; --top-bar-background-lighter:#1d9ba4; --top-bar-color:#f9fafb; --p-frame-offset:0px;">
+	<div class="Polaris-TextContainer <%= @disabled_condition %>">
+		<div class="Polaris-Layout <%= @disabled_condition != '' ? 'disabled' : '' %>">
+			<% if products.present? %>
+				<% products.each do |product| %>
+					<div class="Polaris-Layout__Section Polaris-Layout__Section--oneHalf">
+						<div class="Polaris-Card inner_cards">
+							<div class="Polaris-ResourceItem__Container" id="343">
+								<span class="Polaris-Thumbnail Polaris-Thumbnail--sizeMedium">
+									<%
+										primary_image = product["images"].select {|s| s["is_primary"] == 1}
+										if !primary_image.present?
+											primary_image = product["images"].select {|s| s["is_primary"] == 0}
+										end
+									%>
+
+									<% if primary_image.present? %>
+										<%= image_tag primary_image[0]["url"], class: "Polaris-Thumbnail__Image" %>
+									<% end %>	
+
+								</span>
+
+								<div class="Polaris-ResourceItem__Content description_portion">
+									<h3>
+										<span class="Polaris-TextStyle--variationStrong">
+											<%= link_to product_path(id: product["id"], type: product_type) do %>
+												<%= product["title"].html_safe %>
+											<% end %>	
+										</span>
+									</h3>
+
+									<div class="library_price_details">
+										<div>
+											<%#= strip_tags(product["product_description"].first(80)).gsub('&amp;', '') %>
+											<strong>Suggested Price:</strong>
+											<% if product["pricing"].present? %>
+												$<%= '%.2f' % (product["pricing"].delete('$').to_f) %>
+											<% end %>	
+										</div>	
+
+										<div>
+											<strong>Cost of Product: </strong> 
+											<% if product["item_cost"].present? %>
+												$<%= '%.2f' % (product["item_cost"]) %>
+											<% end %>	
+										</div>
+											
+										<div>
+											<strong>Potenial Profit: </strong>
+											<% if product["pricing"].present? && product["item_cost"].present? %>
+								  				$<%= ('%.2f' % (product["pricing"].gsub("$","").to_f - product["item_cost"])) %>
+								  			<% end %>
+										</div>
+									</div>
+									
+								</div>
+
+								<div class="Polaris-ResourceItem__Content">
+									<% if @all_products[product["id"]].present? %>
+										<% btn_text = "Already In Store" %>
+										<% btn_class= "Polaris-Button Polaris-Button--sizeSlim red_color" %>
+									<% else %>
+										<% btn_text = "Add to Store" %>
+										<% btn_class = "Polaris-Button Polaris-Button--sizeSlim" %>
+									<% end %>
+
+									<div><%= link_to btn_text, 'javascript:void(0)', class: btn_class+" store_add store_add_"+product["id"].to_s, data: {id: product["id"]} %></div>
+
+									<div class="select_collect d-none select_collect_<%= product["id"].to_s%>">
+										<% if @custom_collections.present? %>
+											<%= select_tag "Add to Store", options_from_collection_for_select(@custom_collections, "id", "title"), prompt: "Collection", :class=> "Polaris-Button Polaris-Button--sizeSlim add_to_store", data: {product_id: product["id"], type: product_type, confirm: 'Confirm' } %> 
+										<% else %>
+											<%= select_tag "Add to Store", options_for_select([ "Default"]), prompt: "Collection", :class=> "Polaris-Button Polaris-Button--sizeSlim add_to_store", data: {product_id: product["id"], type: product_type, confirm: 'Confirm' } %> 
+										<% end %>	
+									</div> <br/>
+
+									<div>
+										<%= link_to "View details ", product_path(id: product["id"], type: product_type), class: 'Polaris-Button Polaris-Button--sizeSlim view_details' %>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				<% end %>   
+				<br/>
+				<div class="pagination">
+					<%= will_paginate products, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, list_classes: %w(pagination justify-content-end), :params => { :type => product_type }%>
+				</div>	
+			<% else %>
+				<div class="product-catalogue-header-section mt-30">No Products Present!!!</div>
+			<% end %>    
+		</div>
+	</div>  	
+</div>
+

@@ -1,0 +1,23 @@
+<% if params[:type] == 'free' %>
+	$("#free").html("<%= escape_javascript(render partial: 'product', locals: {products: @free_products, product_type: 'free'})%>");
+	$(".nav-link").removeClass("active");
+	$(".tab-pane").removeClass("show active");
+	$(".free").addClass("active");
+	$(".free_details").addClass("show active");
+<% end %>
+
+<% if params[:type] == 'standard' %>
+	$("#standard").html("<%= escape_javascript(render partial: 'product', locals: {products: @standard_products, product_type: 'standard'})%>");
+	$(".nav-link").removeClass("active");
+	$(".tab-pane").removeClass("show active");
+	$(".standard").addClass("active");
+	$(".standard_details").addClass("show active");
+<% end %>	
+
+<% if params[:type] == 'premium' %>
+	$("#premium").html("<%= escape_javascript(render partial: 'product', locals: {products: @premium_products, product_type: 'premium'})%>");
+	$(".nav-link").removeClass("active");
+	$(".tab-pane").removeClass("show active");
+	$(".premium").addClass("active");
+	$(".premium_details").addClass("show active");
+<% end %>

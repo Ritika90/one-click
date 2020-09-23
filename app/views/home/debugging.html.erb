@@ -1,0 +1,36 @@
+<% if @show_data %>
+    <%= @ad_acct_hash %>
+<% else %>
+
+
+
+
+    <form action="<%= debugging_path %>">
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+        <div class="Polaris-FormLayout">
+            <div class="Polaris-FormLayout__Item">
+                <div class="">
+                    <div class="Polaris-Labelled__LabelWrapper">
+                        <div class="Polaris-Label">
+                            <label id="lblName" for="influencer_code" class="Polaris-Label__Text">Shop_domain</label>
+                        </div>
+                    </div>
+                    <div class="Polaris-TextField">
+                        <input id="shop_domain" class="Polaris-TextField__Input" aria-label="Store name" aria-labelledby="lblName" aria-invalid="false" name="shop_domain" value="">
+                        <div class="Polaris-TextField__Backdrop"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="Polaris-FormLayout__Item">
+                <button type="submit" class="Polaris-Button">
+                    <span class="Polaris-Button__Content">
+                        <span>Submit</span>
+                    </span>
+                </button>
+            </div>
+        </div>
+        <span class="Polaris-VisuallyHidden">
+            <button type="submit" aria-hidden="true"></button>
+        </span>
+    </form>
+<% end %>

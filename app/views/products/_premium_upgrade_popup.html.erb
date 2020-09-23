@@ -1,0 +1,28 @@
+<div class="premium_upgrade_popup">
+  <div class="Polaris-Modal-Dialog__Container">
+    <div>
+      <div role="dialog" class="Polaris-Modal-Dialog">
+        <div class="Polaris-Modal-Dialog__Modal premium_upgrade">
+          <div class="Polaris-Modal__BodyWrapper">
+            <div class="Polaris-Modal__Body Polaris-Scrollable Polaris-Scrollable--vertical premium_upgrade_body" data-polaris-scrollable="true">
+              <section class="Polaris-Modal-Section">
+                <div class="Polaris-TextContainer premium_upgrade_text">
+                  <div>Upgrade to Premium and Unlock Hundreds of New<br> Winning Products</div>
+                  <p>
+                    <% if ENV['SHOW_PREMIUM_UPGRADE'].present? && ENV['SHOW_PREMIUM_UPGRADE'] == 'TRUE' %>
+                      <%= link_to "Upgrade to Premium", upgrade_to_premium_path, class: 'Polaris-Button Polaris-Button--sizeSlim unlock-premium-btn' %>
+                    <% else %>
+                      <%= link_to "Coming Soon", 'javascript:void(0)', class: 'Polaris-Button Polaris-Button--sizeSlim unlock-premium-btn-grey' %>
+                    <% end %>
+                    <%= link_to "Back", root_url(type: 'standard'), class: 'premium-bck-btn' %>
+                  </p>
+                </div>
+              </section>
+            </div>
+          </div>  
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="Polaris-Backdrop"></div> -->
+</div>

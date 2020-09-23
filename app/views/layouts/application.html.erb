@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>One Click eCom</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track'=> true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track'=> true %>
+  </head>
+
+  <body>
+    <div class="container">
+      <% if notice %>
+          <p class="alert alert-success"><%= notice %>
+            <button type="button" class="close" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+          </button>
+        </p>
+      <% end %>
+      <% if alert %>
+          <p class="alert alert-danger"><%= alert %>
+            <button type="button" class="close" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+          </button>
+          </p>
+      <% end %>
+      <%= yield %>
+    </div>  
+  </body>
+</html>

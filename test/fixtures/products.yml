@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  product_id: 1
+  added_to_store: false
+  added_to_store_date: MyString
+  is_deleted: false
+  is_hidden: false
+
+two:
+  product_id: 1
+  added_to_store: false
+  added_to_store_date: MyString
+  is_deleted: false
+  is_hidden: false

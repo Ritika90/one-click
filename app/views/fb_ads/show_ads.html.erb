@@ -1,0 +1,52 @@
+<div style="--top-bar-background:#00848e; --top-bar-background-lighter:#1d9ba4; --top-bar-color:#f9fafb; --p-frame-offset:0px;">
+  <div class="Polaris-Card">
+    <div class="product-header">
+        <h1>Created Ad Campaigns</h1>
+    </div>
+        <div class="Polaris-Card">
+            <div class="row">
+                <div class="col-md-1"><p style="color:white;">filler</p></div>
+                <div class="col-md-10">
+                    <div class="Polaris-DataTable">
+                        <div class="Polaris-DataTable__ScrollContainer">
+                            <table class="Polaris-DataTable__Table">
+                                <thead>
+                                    <tr>
+                                        <th data-polaris-header-cell="true" class="Polaris-DataTable__Cell Polaris-DataTable__Cell--verticalAlignTop Polaris-DataTable__Cell--firstColumn Polaris-DataTable__Cell--header" scope="col">Campaign Name</th>
+                                        <th data-polaris-header-cell="true" class="Polaris-DataTable__Cell Polaris-DataTable__Cell--verticalAlignTop Polaris-DataTable__Cell--header Polaris-DataTable__Cell--numeric" scope="col">Start Time</th>
+                                        <th data-polaris-header-cell="true" class="Polaris-DataTable__Cell Polaris-DataTable__Cell--verticalAlignTop Polaris-DataTable__Cell--header Polaris-DataTable__Cell--numeric" scope="col" style="width:200px !important;">Errors</th>
+                                        <th data-polaris-header-cell="true" class="Polaris-DataTable__Cell Polaris-DataTable__Cell--verticalAlignTop Polaris-DataTable__Cell--header Polaris-DataTable__Cell--numeric" scope="col">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% @fb_ads.each do |fb_ad| %>
+                                    
+                                        <tr class="Polaris-DataTable__TableRow">
+                                            <th class="Polaris-DataTable__Cell Polaris-DataTable__Cell--verticalAlignTop Polaris-DataTable__Cell--firstColumn" scope="row">
+                                                <%= fb_ad[1].campaign_name %>
+                                            </th>
+                                            <td class="Polaris-DataTable__Cell Polaris-DataTable__Cell--verticalAlignTop Polaris-DataTable__Cell--numeric">
+                                                <%= fb_ad[1].start_time %>
+                                            </td>
+                                            <td class="Polaris-DataTable__Cell Polaris-DataTable__Cell--verticalAlignTop Polaris-DataTable__Cell--numeric" style="width:200px !important;">
+                                                <%= fb_ad[1].fb_errors %>
+                                            </td>
+                                            <td class="Polaris-DataTable__Cell Polaris-DataTable__Cell--verticalAlignTop Polaris-DataTable__Cell--numeric">
+                                                <%= fb_ad[1].result_status %>
+                                            </td>
+                                        </tr>
+                                    <% end %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <p style="color:white;">filler</p>
+                    <p style="color:white;">filler</p>
+                    <p style="color:white;">filler</p>
+                </div>
+                <div class="col-md-1"><p style="color:white;">filler</p></div>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>

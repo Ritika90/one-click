@@ -1,0 +1,236 @@
+<div style="--top-bar-background:#00848e; --top-bar-background-lighter:#1d9ba4; --top-bar-color:#f9fafb; --p-frame-offset:0px;">
+    <div class="Polaris-Card">
+        <div class="product-header">
+            <h1>Facebook Account Settings</h1>
+        </div>
+    <!-- could put another div here -->
+        <%#= link_to "Back", root_path, :class => "Polaris-Button Polaris-Button--sizeSlim spin polaris_right" %>
+        <% if @show_facebook_login %>
+            <div class="Polaris-Card">
+                <div class="row mt-2 text-center">
+                    <div class="col-md-12">
+                        <%= link_to "Sign in with Facebook", "/auth/facebook", target: "_top", id: "sign_in", class: "Polaris-Button Polaris-Button--sizeSlim" %>
+                    </div>
+                </div>
+                <p style="color:white;">filler</p>
+                <p style="color:white;">filler</p>
+                <p style="color:white;">filler</p>
+            </div>
+        <% else %>
+            <div class="Polaris-Card">
+                <div class="row">
+
+                    <div class="col-md-2"><p style="color:white;">filler</p></div>
+                    <div class="col-md-8">
+
+
+                        <%= form_with(model: @fb_user, url: update_settings_path, method: 'post', local: true) do |form| %>
+                            <div class="Polaris-DataTable">
+                                <div class="Polaris-DataTable__ScrollContainer">
+                                    <table class="Polaris-DataTable__Table">
+                                        <thead>
+                                            <tr>
+                                                <th data-polaris-header-cell="true" class="Polaris-DataTable__Cell Polaris-DataTable__Cell--verticalAlignTop Polaris-DataTable__Cell--firstColumn Polaris-DataTable__Cell--header" scope="col"></th>
+                                                <th data-polaris-header-cell="true" class="Polaris-DataTable__Cell Polaris-DataTable__Cell--verticalAlignTop Polaris-DataTable__Cell--header Polaris-DataTable__Cell--numeric" scope="col">Current Settings</th>
+                                                <th data-polaris-header-cell="true" class="Polaris-DataTable__Cell Polaris-DataTable__Cell--verticalAlignTop Polaris-DataTable__Cell--header Polaris-DataTable__Cell--numeric" scope="col">New Settings</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="Polaris-DataTable__TableRow">
+                                                <th class="Polaris-DataTable__Cell Polaris-DataTable__Cell--verticalAlignTop Polaris-DataTable__Cell--firstColumn" scope="row">Ad Account:</th>
+                                                <td class="Polaris-DataTable__Cell Polaris-DataTable__Cell--verticalAlignTop Polaris-DataTable__Cell--numeric"><%= @default_ad_account_name %></td>
+                                                <td class="Polaris-DataTable__Cell Polaris-DataTable__Cell--verticalAlignTop Polaris-DataTable__Cell--numeric">
+                                                    <div class="field">
+                                                        <%= select :fb_user, :ad_account_id, options_for_select(@ad_accounts, @default_ad_account) %> 
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr class="Polaris-DataTable__TableRow">
+                                                <th class="Polaris-DataTable__Cell Polaris-DataTable__Cell--verticalAlignTop Polaris-DataTable__Cell--firstColumn" scope="row">Page:</th>
+                                                <td class="Polaris-DataTable__Cell Polaris-DataTable__Cell--verticalAlignTop Polaris-DataTable__Cell--numeric"><%= @default_page_name %></td>
+                                                <td class="Polaris-DataTable__Cell Polaris-DataTable__Cell--verticalAlignTop Polaris-DataTable__Cell--numeric">
+                                                    <div class="field">
+                                                        <%= select :fb_user, :page_id, options_for_select(@pages, @default_page) %>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr class="Polaris-DataTable__TableRow">
+                                                <th class="Polaris-DataTable__Cell Polaris-DataTable__Cell--verticalAlignTop Polaris-DataTable__Cell--firstColumn" scope="row">Pixel:</th>
+                                                <td class="Polaris-DataTable__Cell Polaris-DataTable__Cell--verticalAlignTop Polaris-DataTable__Cell--numeric"><%= @default_pixel_name %></td>
+                                                <td class="Polaris-DataTable__Cell Polaris-DataTable__Cell--verticalAlignTop Polaris-DataTable__Cell--numeric">
+                                                    <div class="field">
+
+                                                        <%= select :fb_user, :pixel_id, options_for_select(@final_pixel_hash, @default_pixel) %>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr class="Polaris-DataTable__TableRow">
+                                                <th class="Polaris-DataTable__Cell Polaris-DataTable__Cell--verticalAlignTop Polaris-DataTable__Cell--firstColumn" scope="row"></th>
+                                                <td class="Polaris-DataTable__Cell Polaris-DataTable__Cell--verticalAlignTop Polaris-DataTable__Cell--numeric"></td>
+                                                <td class="Polaris-DataTable__Cell Polaris-DataTable__Cell--verticalAlignTop Polaris-DataTable__Cell--numeric">
+                                                    <div class="actions">
+                                                        <%= form.submit "Update", :class => "Polaris-Button Polaris-Button--sizeSlim" %>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        <% end %>
+                        <!-- <p style="color:white;">filler</p>
+                        <div class="row mt-2 text-center">
+                            <div class="col-md-12">
+                                <%#= link_to "Disconnect your fb account", remove_fb_user_path , id: "sign_out", class: "Polaris-Button Polaris-Button--sizeSlim" %>
+                            </div>
+                        </div>
+                        <p style="color:white;">filler</p>
+                        <p style="color:white;">filler</p>
+                        <p style="color:white;">filler</p> -->
+                    </div>
+                    <div class="col-md-2"><p style="color:white;">filler</p></div>
+                </div>
+            </div>
+
+            <div class="Polaris-Card">
+                <div class="product-header">
+                    <h1>Facebook Ad Settings</h1>
+                </div>
+
+                <div class="Polaris-Card facebook_adsetting">
+                    <div class="">
+                        <div style="--top-bar-background:#00848e; --top-bar-background-lighter:#1d9ba4; --top-bar-color:#f9fafb; --p-frame-offset:0px;">
+
+                            <%= form_with(model: @fb_user, url: update_ad_settings_path, method: 'post') do |form| %>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="Polaris-Labelled__LabelWrapper">
+                                            <div class="row set_width daily_adset_spend">
+                                                <div class="col-md-6">
+                                                    <label id="PolarisSelect2Label" for="PolarisSelect2" class="Polaris-Label__Text">Daily Adset Spend</label>
+                                                </div>    
+
+                                                <div class="col-md-6">
+                                                    <div class="Polaris-Select">
+                                                        <select id="PolarisSelect2" class="Polaris-Select__Input" aria-invalid="false" name="daily_adset_spend">
+                                                            <% (1..20).to_a.each do |i| %>
+                                                                <% if @fb_adset && i == @fb_adset.daily_adset_spend %>
+                                                                    <option value="<%= i%>" selected>$<%= i%></option>
+                                                                <% else %>
+                                                                    <option value="<%= i%>">$<%= i%></option>
+                                                                <% end %>
+                                                            <% end %>
+                                                        </select>
+
+                                                        <div class="Polaris-Select__Content" aria-hidden="true">
+                                                            <span class="Polaris-Select__SelectedOption daily_ad">
+                                                                <% if @fb_user.present? && @fb_user.adset_id.present? && @fb_adset.daily_adset_spend.present? %>
+                                                                    $<%= @fb_adset.daily_adset_spend %>
+                                                                <% else %>
+                                                                    $5
+                                                                <% end %>    
+                                                            </span>
+                                                            <span class="Polaris-Select__Icon">
+                                                                <span class="Polaris-Icon">
+                                                                    <svg viewBox="0 0 20 20" class="Polaris-Icon__Svg" focusable="false" aria-hidden="true">
+                                                                        <path d="M13 8l-3-3-3 3h6zm-.1 4L10 14.9 7.1 12h5.8z" fill-rule="evenodd">
+                                                                        </path>
+                                                                    </svg>
+                                                                </span>
+                                                            </span>
+                                                        </div>
+                                                        <div class="Polaris-Select__Backdrop"></div>
+                                                    </div>
+                                                </div>    
+                                            </div>    
+                                        </div>
+                                    </div>    
+
+                                    <div class="col-md-6">
+                                        <div class="Polaris-Labelled__LabelWrapper">
+                                            <div class="row set_width number_of_adsets">
+                                                <div class="col-md-6">
+                                                    <label id="PolarisSelect2Label" for="PolarisSelect2" class="Polaris-Label__Text">Number of Adsets</label>
+                                                </div>    
+
+                                                <div class="col-md-6">
+                                                    <div class="Polaris-Select">
+                                                        <select id="PolarisSelect2" class="Polaris-Select__Input" aria-invalid="false" name="number_of_adsets">
+                                                            <% (1..10).to_a.each do |i| %>
+                                                                <% if @fb_adset && i == @fb_adset.number_of_adsets %>
+                                                                    <option value="<%= i%>" selected><%= i%></option>
+                                                                <% else %>
+                                                                    <option value="<%= i%>"><%= i%></option>
+                                                                <% end %>
+                                                            <% end %>
+                                                        </select>
+
+                                                        <div class="Polaris-Select__Content" aria-hidden="true">
+                                                            <span class="Polaris-Select__SelectedOption number_of_ad">
+                                                                 <% if @fb_user.present? && @fb_user.adset_id.present? && @fb_adset.number_of_adsets.present? %>
+                                                                    <%= @fb_adset.number_of_adsets %>
+                                                                <% else %>
+                                                                    5
+                                                                <% end %>    
+                                                            </span>
+                                                            <span class="Polaris-Select__Icon">
+                                                                <span class="Polaris-Icon">
+                                                                    <svg viewBox="0 0 20 20" class="Polaris-Icon__Svg" focusable="false" aria-hidden="true">
+                                                                        <path d="M13 8l-3-3-3 3h6zm-.1 4L10 14.9 7.1 12h5.8z" fill-rule="evenodd"> 
+                                                                        </path>
+                                                                    </svg>
+                                                                </span>
+                                                            </span>
+                                                        </div>
+                                                        <div class="Polaris-Select__Backdrop"></div>
+                                                    </div>
+                                                </div>    
+                                            </div>    
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+
+                                <div class="row">
+                                    <div class="col-md-12 text-center">
+                                        <%= label_tag 'check_currency' do %>
+                                            <!-- TODO: change the default from false to @currency_multiple_selected -->
+                                            <%= check_box_tag 'check_currency', '1', @currency_set %>
+                                            Select if your Facebook Ad Account uses a currency other than USD, GBP, Euro
+                                        <% end %>
+                                    </div>
+
+                                    <div class="col-md-12 text-center mt-10 currency_multiple_display" style="<%= 'display: block !important;' if @currency_set %>">
+                                        <%= number_field_tag "currency_multiple", @exchange_rate, min: 1 %><br/>
+                                        <%= label_tag "Enter the Exchange Rate Between USD and your Ad Account's Currency (Ex: USD to Rupee = 75)" %>
+                                    </div>    
+                                </div>
+                                <hr>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="actions update_ad_settings text-right">
+                                            <%= form.submit "Update", :class => "Polaris-Button Polaris-Button--sizeSlim" %>
+                                        </div>
+                                    </div>    
+                                </div>    
+                            <% end %>    
+                        </div>
+                    </div>
+                </div>          
+            </div>
+
+            <div class="Polaris-Card">
+                <div class="row mt-2 text-center pd-20">
+                    <div class="col-md-12">
+                        <%= link_to "Disconnect your fb account", remove_fb_user_path , id: "sign_out", class: "Polaris-Button Polaris-Button--sizeSlim" %>
+                    </div>
+                </div>
+            </div> 
+        <% end %>
+    </div>
+  </div>
+</div>  
+
+<%= render partial: "products/loader" %>

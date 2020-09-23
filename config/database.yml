@@ -1,0 +1,56 @@
+# default: &default
+#   adapter: mysql2
+#   encoding: utf8
+#   pool: 5
+#   username: root
+#   password: esfera
+#   socket: /var/run/mysqld/mysqld.sock
+#   reconnect: true
+
+# development:
+#   <<: *default
+#   database: productify_development
+# test:
+#   <<: *default
+#   database: productify_test
+
+# production:
+#   <<: *default
+#   database: productify_test
+
+
+# PostgreSQL. Versions 9.3 and up are supported.
+#
+# Install the pg driver:
+#   gem install pg
+# On macOS with Homebrew:
+#   gem install pg -- --with-pg-config=/usr/local/bin/pg_config
+# On macOS with MacPorts:
+#   gem install pg -- --with-pg-config=/opt/local/lib/postgresql84/bin/pg_config
+# On Windows:
+#   gem install pg
+#       Choose the win32 build.
+#       Install PostgreSQL and put its /bin directory on your path.
+#
+# Configure Using Gemfile
+# gem 'pg'
+#
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  username: postgres
+  password: postgres
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database: productify_development
+
+test:
+  <<: *default
+  database: productify_test
+
+production:
+  <<: *default
+  database: productify_production
+  

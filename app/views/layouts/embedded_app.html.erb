@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <% application_name = ShopifyApp.configuration.application_name %>
+    <title><%= application_name %></title>
+    <%= stylesheet_link_tag 'application' %>
+    <% if ShopifyApp.use_webpacker? %>
+      <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <% else %>
+      <%= javascript_include_tag 'application', "data-turbolinks-track" => true %>
+    <% end %>
+    <%= csrf_meta_tags %>
+    <link rel="stylesheet" href="https://unpkg.com/@shopify/polaris@4.21.0/styles.min.css"/>
+
+    <script src="https://cdn.shopify.com/s/assets/external/app.js?<%= Time.now.strftime('%Y%m%d%H') %>"></script>
+    <script type="text/javascript">
+      ShopifyApp.init({
+        apiKey: "<%= ShopifyApp.configuration.api_key %>",
+        shopOrigin: "<%= "https://#{ @current_shopify_session.domain }" if @current_shopify_session %>",
+        debug: 'true',
+        forceRedirect: <%= Rails.env.development? ? 'false' : 'true' %>
+      });
+      ShopifyApp.ready(function(){
+        ShopifyApp.Bar.initialize({
+          icon: "<%= request.url %>/placeholder.jpg", 
+          buttons: {
+            secondary: [
+              { label: "Product Library", href: "<%= root_path %>" },
+              { label: "My Products", href: "<%= my_products_path %>" },
+              // { label: "Past Campaigns", href: "<%= past_campaigns_path %>" },
+              { label: "Settings", href: "<%= settings_path %>" },
+              { label: "FB Ads", href: "<%= show_ads_path %>" },
+              { label: "Getting Started", href: "<%= instructions_path %>" }
+            ], 
+            primary: [
+              { label: "Contact Us", href: "<%= contact_us_path %>" }
+            ]
+          }
+        });
+      });
+    </script>
+  </head>
+
+  <body>
+    <div class="app-wrapper">
+      <div class="app-content">
+        <main role="main">
+          <%= yield %>
+        </main>
+      </div>
+    </div>
+    <%= render 'layouts/flash_messages' %>
+    <script src="https://unpkg.com/@shopify/app-bridge"></script>
+
+    <%= content_tag(:div, nil, id: 'shopify-app-init', data: {
+      api_key: ShopifyApp.configuration.api_key,
+      shop_origin: (@current_shopify_session.domain if @current_shopify_session),
+      debug: Rails.env.development?
+    } ) %>
+
+    <% if content_for?(:javascript) %>
+      <div id="ContentForJavascript" data-turbolinks-temporary>
+        <%= yield :javascript %>
+      </div>
+    <% end %>
+  </body>
+</html>
+

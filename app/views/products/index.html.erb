@@ -1,0 +1,93 @@
+<div style="--top-bar-background:#00848e; --top-bar-background-lighter:#1d9ba4; --top-bar-color:#f9fafb; --p-frame-offset:0px;">
+  <div class="Polaris-Card <%= (current_shop.present? && !current_shop.subscribe_to_klaviyo && ENV['KLAVIYO'] != 'FALSE') ? 'disabled' : ''%>">
+    <div class="Polaris-Card text-center">
+  	   <div class="product-header">Product Catalog </div>
+       <div class="product-catalogue-header-section">New winning products added daily. Launch any of them with just a few simple clicks!</div>
+    </div> 
+    <div>
+      <div class="Polaris-Tabs__Wrapper">
+        <ul role="tablist" class="Polaris-Tabs">
+<!--      <li class="Polaris-Tabs__TabContainer">
+          	<%#= link_to root_path(type: 'free'), id: "free", class: "Polaris-Tabs__Tab spin free "+@free_active do %>
+          		<span class="Polaris-Tabs__Title">Free</span>
+          	<%# end %>
+      		</li> -->
+
+          <li class="Polaris-Tabs__TabContainer">
+	         <%= link_to root_path(type: 'standard'), id: "standard", class: "Polaris-Tabs__Tab spin standard "+@standard_active do %>
+          		<span class="Polaris-Tabs__Title">Paid</span>
+          	<% end %>
+      		</li>
+
+     		  <li class="Polaris-Tabs__TabContainer">
+          	<%= link_to root_path(type: 'premium'), id: "premium", class: "Polaris-Tabs__Tab spin premium "+@premium_active do %>
+          		<span class="Polaris-Tabs__Title">Premium</span>
+          	<% end %>
+      		</li> 
+
+          <% if ENV['BETA_STAGE'] == 'TRUE' %>
+            <li class="Polaris-Tabs__TabContainer">
+              <%= link_to root_path(type: 'in_review'), id: "in_review", class: "Polaris-Tabs__Tab spin in_review "+@in_review_active do %>
+                <span class="Polaris-Tabs__Title">In Review</span>
+              <% end %>
+            </li> 
+          <% end %>  
+
+          <!-- <li class="Polaris-Tabs__TabContainer filters"> -->
+            <div class="set_filter_position">
+              <%= link_to root_path(sort: 'Newest', type: @product_type), id: "newest", class: "Polaris-Button Polaris-Button--sizeSlim spin main_filters "+@newest_active do %>
+                <span class="">Newest</span>
+              <% end %>
+
+              <%= link_to root_path(sort: 'Random', type: @product_type), id: "random", class: "Polaris-Button Polaris-Button--sizeSlim spin main_filters "+@random_active do %>
+                <span class="">Random</span>
+              <% end %>
+            </div>  
+          <!-- </li>   -->
+
+          <%# if params[:ty
+
+          <%# if params[:type].present? && params[:type] == 'premium' %>
+            <%#= link_to "Unlock Premium", 'javascript:void(0)', class: 'Polaris-Button Polaris-Button--sizeSlim unlock-premium-btn', :data => {toggle: "tooltip"}, title: " Upgrade to Premium \n to Unlock #{@get_premium.length} Winning \n Products" %>
+          <%# end %>  
+        </ul>
+      </div>
+
+      <div class="Polaris-Tabs__Panel" id="free-content">
+        <div class="Polaris-Card__Section <%= @free_active_details%>">
+          <%= render partial: "product", locals: {products: @free_products, product_type: 'free'}%>
+        </div>
+      </div>
+
+      <div class="Polaris-Tabs__Panel" id="standard-content">
+        <div class="Polaris-Card__Section <%= @standard_active_details%>">
+          <%= render partial: "product", locals: {products: @standard_products, product_type: 'standard'}%>
+        </div>
+      </div>
+
+      <div class="Polaris-Tabs__Panel" id="premium-content">
+        <div class="Polaris-Card__Section <%= @premium_active_details%>">
+          <%= render partial: "product", locals: {products: @premium_products, product_type: 'premium'}%>
+        </div>
+      </div>
+
+      <div class="Polaris-Tabs__Panel" id="in_review-content">
+        <div class="Polaris-Card__Section <%= @in_review_active_details%>">
+          <%= render partial: "product", locals: {products: @in_review_products, product_type: 'in_review'}%>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= render partial: "confirm_popup" %>
+<% if current_shop.present? && !current_shop.subscribe_to_klaviyo && ENV['KLAVIYO'] != 'FALSE' %>
+  <%= render partial: "klaviyo_popup" %>
+<% end %>  
+
+<%= render partial: "loader" %>
+
+<% if (params[:type].present? && params[:type] == 'premium' && @current_shop.last.premium != true)%>
+  <%= render partial: "premium_upgrade_popup" %>
+<% end %>  
+

@@ -1,0 +1,142 @@
+<div style="--top-bar-background:#00848e; --top-bar-background-lighter:#1d9ba4; --top-bar-color:#f9fafb; --p-frame-offset:0px;">
+  	<div class="Polaris-Card">
+	  	<div class="product-header">
+	  		My Products 
+	  	</div>
+  	</div>
+</div>  
+
+<div>
+	<% if !@my_products.present? %>
+		No Products Available
+	<% end %>
+
+
+	<% if @my_products.present? %>
+
+		<% if @product_details.present? %>
+			<% @product_details.flatten.each do |product| %>
+				<div class="Polaris-Layout">
+				    <div class="Polaris-Layout__Section">
+				      <div class="Polaris-Card">
+				        <div class="Polaris-Card__Section">
+				        	<div class="Polaris-ResourceList__ResourceListWrapper">
+								<div class="Polaris-ResourceItem__Container" id="343">
+									<div class="Polaris-ResourceItem__Owned">
+										<div class="Polaris-ResourceItem__Media">
+											<span class="">
+												<%
+													primary_image = product["images"].select {|s| s["is_primary"] == 1}
+													if !primary_image.present?
+														primary_image = product["images"].select {|s| s["is_primary"] == 0}
+													end
+												%>
+
+												<% if primary_image.present? %>
+													<%= image_tag primary_image[0]["url"], width: 215, height: 215, class: "rounded-lg" %>
+												<% end %>	
+
+											</span>
+										</div>
+									</div>
+
+									<div class="my_products Polaris-ResourceItem__Content description_portion">
+										<%= link_to product_path(id: product["id"], type:  @my_products_with_index[product["id"]].product_type) do %>
+											<div><b><%= product["title"].html_safe %></b></div>
+										<% end %>	
+										<div><%= strip_tags(product["product_description"]).first(300).gsub('&amp;', '') %></div>
+										<div class="my_product_price_details">
+											<div>
+												<strong>Suggested Price:</strong>
+												<span class="sug_price_value">
+													<% if product["pricing"].present? %>
+														$<%= '%.2f' % (product["pricing"].delete('$').to_f) %>
+													<% end %>	
+												</span>
+											</div>	
+
+											<div>
+												<strong>Cost of Product: </strong> 
+												<span class="product_price_value">$<%= '%.2f' % (product["item_cost"]) %></span>
+											</div>
+												
+											<div>
+												<strong>Potenial Profit: </strong>
+												<span class="pot_price_value">
+													<% if product["pricing"].present? && product["item_cost"].present? %>
+										  				$<%= ('%.2f' % (product["pricing"].gsub("$","").to_f - product["item_cost"])) %>
+										  			<% end %>
+										  		</span>	
+											</div>
+										</div>
+										<% if @collections.present? && @collects.present? && @collects[@my_products[product["id"]]].present? %>
+											<div><strong>Collection: </strong><%= @collections[@collects[@my_products[product["id"]].store_product_id][0].to_s][0] %></div>
+										<% end %>
+									</div>
+
+									<div class="Polaris-ResourceItem__Content mt-4">
+										<div class="text-center mt-4">
+											<div>
+												<% if @store.present? && @store[@my_products_with_index[product["id"]].store_product_id.to_i].present? %>
+													<% if !@show_facebook_login %>
+														<!-- TODO: Need to actually link to the FB settings thing -->
+
+
+
+
+
+
+
+
+														<% if @my_products_with_index[product["id"]].present? %>
+															<%#= link_to "Create FB Ad", create_fb_ad_path(id: product["id"], type:  @my_products[product["id"]].product_type), class: "Polaris-Button Polaris-Button--sizeSlim fb_btn my_product_width create_fb_add product_fb"+product["id"] %>
+															<%= link_to "Create FB Ad", 'javascript:void(0)', class: "Polaris-Button Polaris-Button--sizeSlim fb_btn my_product_width create_fb_add", data: { id: product["id"], type: @my_products_with_index[product["id"]].product_type} %>
+														<!-- Not sure this is needed -->
+														<% else %>
+															<%= link_to "NOPE", settings_path(type: 'initial'), class: "Polaris-Button Polaris-Button--sizeSlim my_product_width product_settings", data: { id: product["id"], type: @my_products_with_index[product["id"]].product_type} %>
+															<%#= link_to "NOPE", 'javascript:void(0)', class: "Polaris-Button Polaris-Button--sizeSlim fb_btn my_product_width product_settings", data: { id: product["id"]} %>
+														<% end %>
+
+
+
+
+
+
+													<% else %>
+														<%= link_to "Create FB Ad", settings_path(type: 'initial'), class: "Polaris-Button Polaris-Button--sizeSlim my_product_width product_settings", data: { id: product["id"], type: @my_products_with_index[product["id"]].product_type}%>
+														<%#= link_to "Create FB Ad", 'javascript:void(0)', class: "Polaris-Button Polaris-Button--sizeSlim fb_btn my_product_width product_settings", data: { id: product["id"]}%>
+													<% end %>
+												<% end %>	
+											</div>
+											
+											<div>	
+												<% if @store.present? && @store[@my_products_with_index[product["id"]].store_product_id.to_i].present? && !@store[@my_products_with_index[product["id"]].store_product_id.to_i][0]["published_at"].present? %>
+													<%= link_to "Make Product Available", make_product_available_path(id: product["id"]), class: "Polaris-Button Polaris-Button--sizeSlim spin" %>
+												<% end %>
+											</div>		
+
+											<div>
+												<%= link_to 'Remove From Store', 'javascript:void(0)', data: { id: product["id"] }, class: "Polaris-Button Polaris-Button--sizeSlim remove_product" %>
+											</div>	
+
+											<div>
+												<%= link_to "View details ", product_path(id: product["id"], type: @my_products_with_index[product["id"]].product_type), class: 'Polaris-Button Polaris-Button--sizeSlim spin view_details my_product_width' %>
+											</div>	
+										</div>
+									</div>
+								</div>
+							</div>
+				        </div>
+				      </div>
+				    </div>
+				</div>
+			<% end %>
+		<% end %>	
+	<% end %>
+</div>		
+
+<%= render partial: "remove_popup" %>
+<%= render partial: "loader" %>
+<%= render partial: "confirm_popup_fb" %>
+<%= render partial: "confirm_fb_progress" %>
+<%#= render partial: "confirm_popup_fb_settings" %>

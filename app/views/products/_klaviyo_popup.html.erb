@@ -1,0 +1,49 @@
+<div class="confirm_popup_klaviyo">
+  <div class="Polaris-Modal-Dialog__Container">
+    <div>
+      <div role="dialog" class="Polaris-Modal-Dialog">
+        <div class="Polaris-Modal-Dialog__Modal">
+          <div class="Polaris-Modal-Header">
+            <div id="modal-header2" class="Polaris-Modal-Header__Title">
+              <h2 class="Polaris-DisplayText Polaris-DisplayText--sizeSmall">Set-Up Almost Complete... Please Provide Email Address to Enter</h2>
+            </div>
+      <!--       <button class="Polaris-Modal-CloseButton" ><span class="Polaris-Icon Polaris-Icon--colorInkLighter Polaris-Icon--isColored"><svg viewBox="0 0 20 20" class="Polaris-Icon__Svg" focusable="false" aria-hidden="true">
+                  <path d="M11.414 10l6.293-6.293a.999.999 0 1 0-1.414-1.414L10 8.586 3.707 2.293a.999.999 0 1 0-1.414 1.414L8.586 10l-6.293 6.293a.999.999 0 1 0 1.414 1.414L10 11.414l6.293 6.293a.997.997 0 0 0 1.414 0 .999.999 0 0 0 0-1.414L11.414 10z" fill-rule="evenodd"></path>
+                </svg></span></button> -->
+          </div>
+
+          <%= form_tag track_klaviyo_path, class: 'fb_settings', method: :post do %> 
+            <div class="Polaris-Modal__BodyWrapper">
+              <div class="Polaris-Modal__Body Polaris-Scrollable Polaris-Scrollable--vertical" data-polaris-scrollable="true">
+                <section class="Polaris-Modal-Section">
+                  <div class="Polaris-TextContainer">
+                    <%= text_field_tag "email", nil, :class=>"form-control", :placeholder => 'Email' %>
+                  </div>
+                </section>
+              </div>
+            </div>
+          
+            <div class="Polaris-Modal-Footer">
+              <div class="Polaris-Modal-Footer__FooterContent">
+                <div class="Polaris-Stack Polaris-Stack--alignmentCenter">
+                  <div class="Polaris-Stack__Item Polaris-Stack__Item--fill"></div>
+                  <div class="Polaris-Stack__Item">
+                    <div class="Polaris-ButtonGroup">
+                      <div class="Polaris-ButtonGroup__Item">
+                        <%= link_to "Add", 'javascript:void(0)', class: "Polaris-Button Polaris-Button--primary confirm_fb_settings spin" %>
+                      </div>
+                      <div class="Polaris-ButtonGroup__Item">
+                        <%#= link_to "Cancel", 'javascript:void(0)', class: "Polaris-Button discard" %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>  
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="Polaris-Backdrop"></div>
+</div>

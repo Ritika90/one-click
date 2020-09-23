@@ -1,0 +1,260 @@
+<div style="--top-bar-background:#00848e; --top-bar-background-lighter:#1d9ba4; --top-bar-color:#f9fafb; --p-frame-offset:0px;">
+  <div class="Polaris-Card">
+  	<div class="product-header">
+  		Product Details: <%= @product["title"]%>
+  	</div>
+  </div>
+</div>  
+
+<div class="product_details Polaris-Card">
+	<div class="row">
+		<% if !@check_product.present?  %>
+			<div class="col-md-5 text-center">
+				<% if @primary_image.present? %>
+					<%= image_tag @primary_image[0]["url"], width: 250, height: 250 %>
+				<% end %>
+			</div>
+			<div class="col-md-7 mt-5">
+
+				<div class="row">
+					<div class="col-md-6">
+						<div class="row ml-5">
+							<div class="col-md-12">
+								<div class="row">
+									<div class="col-md-10">
+										<strong>Suggested Retail Price:</strong> 
+									</div>	
+									<div class="col-md-2">
+						  				$<%= '%.2f' % (@product["pricing"].delete('$').to_f) %>
+						  			</div>	
+						  		</div>	
+						  	</div>	
+					  	</div>	
+					  	<div class="row mt-2 ml-5">
+						  	<div class="col-md-12">
+						  		<div class="row">
+									<div class="col-md-10">
+					  					<strong>Cost of Product: </strong> 
+					  				</div>
+
+					  				<div class="col-md-2">
+					  					$<%= '%.2f' % (@product["item_cost"]) %>
+					  				</div>
+					  			</div>		
+					  		</div>
+					  	</div>
+				  		<div class="row mt-2 ml-5">
+				  			<hr>
+				  			<div class="col-md-12">
+				  				<div class="row">
+									<div class="col-md-10">
+					  					<strong>Potenial Profit: </strong> 
+					  				</div>
+					  				
+					  				<div class="col-md-2">	
+							  			<% if @product["pricing"].present? && @product["item_cost"].present? %>
+							  				$<%= ('%.2f' % (@product["pricing"].gsub("$","").to_f - @product["item_cost"])) %>
+							  			<% end %>	
+							  		</div>
+							  	</div>		
+					  		</div>	
+				  		</div>
+
+				  		<div class="row mt-3 ml-5">
+				  			<div class="col-md-12 mt-5 text-center">
+
+								<% btn_text = "Add to Store" %>
+								<% btn_class = "Polaris-Button Polaris-Button--primary" %>
+
+								<div><%= link_to btn_text, 'javascript:void(0)', class: btn_class+" btn-tiny store_add store_add_"+@product["id"].to_s, data: {id: @product["id"]} %></div>
+								<div class="select_collect d-none select_collect_<%= @product["id"].to_s%>">
+									<% if @custom_collections.present? %>
+										<%= select_tag "Add to Store", options_from_collection_for_select(@custom_collections, "id", "title"), prompt: "Collection", :class=> "Polaris-Button Polaris-Button--sizeSlim add_to_store", data: {product_id: @product["id"], type: params[:type], confirm: 'Confirm' } %> 
+									<% else %>
+										<%= select_tag "Add to Store", options_for_select([ "Default"]), prompt: "Collection", :class=> "Polaris-Button Polaris-Button--sizeSlim add_to_store", data: {product_id: @product["id"], type: params[:type], confirm: 'Confirm' } %> 
+									<% end %>
+								</div>
+					  		</div>	
+				  		</div>	
+				  	</div>
+				</div>
+			</div>
+		<% else %>	
+			<div class="col-md-12">
+				<div class="row products_details">
+					<div class="col-md-4 text-center">
+						<%
+							primary_image = @product["images"].select {|s| s["is_primary"] == 1}
+							if !primary_image.present?
+								primary_image = @product["images"].select {|s| s["is_primary"] == 0}
+							end
+						%>
+
+						<% if primary_image.present? %>
+							<%= image_tag primary_image[0]["url"], width: 300, height: 300 %>
+						<% end %>	
+					</div>
+
+					<div class="col-md-4">
+						<div class="row">
+							<div class="col-md-8">
+								<strong>Suggested Retail Price:</strong> 
+							</div>	
+							<div class="col-md-4">
+				  				$<%= '%.2f' % (@product["pricing"].delete('$').to_f) %>
+				  			</div>		
+					  	</div>	
+					  	<div class="row mt-2">
+							<div class="col-md-8">
+			  					<strong>Cost of Product: </strong> 
+			  				</div>
+
+			  				<div class="col-md-4">
+			  					$<%= '%.2f' % (@product["item_cost"]) %>
+
+			  				</div>
+					  	</div>
+				  		<div class="row mt-2">
+							<div class="col-md-8">
+			  					<strong>Potenial Profit: </strong> 
+			  				</div>
+			  				
+			  				<div class="col-md-4">	
+					  			<% if @product["pricing"].present? && @product["item_cost"].present? %>
+					  				$<%= ('%.2f' % (@product["pricing"].gsub("$","").to_f - @product["item_cost"])) %>
+					  			<% end %>	
+					  		</div>
+				  		</div>
+						<% store_val = @store.present? && @my_products[@product["id"]].present? && @store[@my_products[@product["id"]].store_product_id.to_i] %>
+						<div class="row mt-3 text-center">
+							<div class="<%= store_val.present? ? 'col-md-12' : 'col-md-5' %>">
+								<% if store_val.present? %>
+
+									<% if !@show_facebook_login %>
+										<!-- TODO: Need to actually link to the FB settings thing -->
+
+
+
+
+										<!-- TODO: set path, and pass id as arg -->
+
+
+
+
+										<%#= link_to "Create FB Ad", create_fb_ad_path(:id => @product["id"], :type => params[:type]), class: "Polaris-Button Polaris-Button--sizeSlim fb_btn my_product_width" %>
+
+
+
+										<%= link_to "Create FB Ad", 'javascript:void(0)', class: "Polaris-Button Polaris-Button--sizeSlim fb_btn my_product_width create_fb_add", data: { id: @product["id"], type:  params[:type]} %>
+
+
+
+
+
+
+
+									<% else %>
+										<%= link_to "Create FB Ad", settings_path(type: 'initial'), class: "Polaris-Button Polaris-Button--sizeSlim my_product_width product_settings", data: { id: @product["id"], type:  params[:type]} %>
+										<%#= link_to "Create FB Ad", 'javascript:void(0)', class: "Polaris-Button Polaris-Button--sizeSlim fb_btn my_product_width product_settings", data: { id: @product["id"]} %>
+									<% end %>
+
+								<% end %>	
+							</div>
+							
+							<% if store_val.present? && !@store[@my_products[@product["id"]].store_product_id.to_i][0]["published_at"].present? %>
+								<div class="col-md-12 mt-2">	
+									<%= link_to "Make Product Available", make_product_available_path(id: @product["id"]), class: "Polaris-Button Polaris-Button--sizeSlim" %>
+								</div>		
+							<% end %>	
+						</div>	
+
+						<% if store_val.present? %>
+							<div class="row mt-2 text-center">
+								<div class="col-md-12">
+									<%= link_to 'Remove From Store', 'javascript:void(0)', data: { id: @product["id"] }, class: "Polaris-Button Polaris-Button--sizeSlim remove_product" %>
+								</div>	
+							</div>	
+						<% end %>	
+					</div>
+
+					<div class="col-md-4 border text-center fb_background">
+						<%= image_tag @product["facebook_ad_example_image"], height: 300 %>
+					</div>
+				</div>	
+			</div>
+		<% end %>	
+	</div> <br/>
+
+	<div class="row mt-4">
+	  	<div><strong class="ml-3">Description:</strong></div>
+		<div class="col-md-12">
+			<div id="module">
+			  <div class="collapse" id="collapseExample" aria-expanded="false">
+			    <%= @product["product_description"].html_safe %>
+			  </div>
+			  <a role="button" class="collapsed Polaris-Button Polaris-Button--sizeSlim" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"></a>
+			</div>
+		</div>
+	</div>
+
+	<div class="row mt-4">
+	  	<div><strong class="ml-3">Oberlo Item Link:</strong></div>
+		<div class="col-md-12">
+			<%= @product["oberlo_link"] %>
+		</div>
+	</div>
+
+	<% if !@check_product.present? %>
+		<div class="row mt-4">
+			<div><strong class="ml-3">For FB ad:</strong></div>
+			<div class="col-md-12">
+				<% if @product["facebook_ad_example_image"].present? %>
+					<%= image_tag @product["facebook_ad_example_image"], height: 400 %>
+				<% end %>
+			</div>
+		</div>		
+	<% end %>	
+
+	<div class="mt-4">
+	  	<div><strong>Images:</strong></div><br/>
+	 	<div id="demo" class="carousel slide" data-ride="carousel" data-interval="false">
+	 		<div class="carousel-inner row m-0" role="listbox">
+	 			<% @all_images.each_with_index do |image, index| %>
+		 			<div class="carousel-item col-md-4 <%= index == 0 ? 'active' : '' %>">
+	                	<%= image_tag image["url"], width: 300, class: "border border-secondary"%>
+	            	</div>
+	            <% end %>	
+	 		</div>
+		  	
+		  	<!-- Left and right controls -->
+		  	<a class="carousel-control-prev" href="#demo" data-slide="prev">
+		    	<span class="carousel-control-prev-icon"></span>
+		  	</a>
+		  	<a class="carousel-control-next" href="#demo" data-slide="next">
+		    	<span class="carousel-control-next-icon"></span>
+		  	</a>
+		</div>
+	</div>
+
+	<div class="mt-4">
+	  	<div><strong>Videos:</strong></div><br/>
+	 	<div id="demo1" class="carousel slide" data-ride="carousel" data-interval="false">
+	 		<div class="carousel-inner row text-center" role="listbox">
+	 			<% @all_videos.first(2).each_with_index do |video, index| %>
+		 			<div class="carousel-item col-md-6 <%= index == 0 ? 'active' : '' %>">
+	                	<video width="300" height="300" border="5" controls="controls" controlsList="nodownload">
+			                <source src="<%= video["url"]%>" type="video/mp4">
+			            </video>
+	            	</div>
+	            <% end %>	
+	 		</div>
+		</div>
+	</div>
+</div>
+
+<%= render partial: "confirm_popup" %>
+<%= render partial: "confirm_popup_fb" %>
+<%#= render partial: "confirm_popup_fb_settings" %>
+<%= render partial: "remove_popup" %>
+<%= render partial: "loader" %>
+<%= render partial: "confirm_fb_progress" %>

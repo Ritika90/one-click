@@ -1,0 +1,2 @@
+class Adset < ApplicationRecord
+end
